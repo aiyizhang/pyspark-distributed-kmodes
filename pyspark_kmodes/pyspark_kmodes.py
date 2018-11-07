@@ -311,7 +311,7 @@ def check_for_empty_cluster(clusters, rdd):
     for index, size in enumerate(cluster_sizes):
         
         if size == 0:
-            partition_index = int(np.floor(index/n_clusters))
+            partition_index = int(np.floor(index/n_partitions))
             partition_sizes = cluster_sizes[n_clusters*(partition_index):n_clusters*(partition_index+1)]
             biggest_cluster = np.argmax(np.array(partition_sizes)) + n_clusters*(partition_index)
             random_element = random.choice(clusters[biggest_cluster].members)
