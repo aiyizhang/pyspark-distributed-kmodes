@@ -268,7 +268,7 @@ def k_modes_partitioned(data_rdd, n_clusters, max_iter, seed = None):
         
         clusters = new_clusters
         # Check for empty clusters and reinitialize with random element from biggest cluster is needed
-        # clusters = check_for_empty_cluster(clusters, rdd)
+        clusters = check_for_empty_cluster(clusters, rdd)
         if moved == 0:
             did_it_move = False 
         if iter_count >= max_iter:
@@ -311,7 +311,7 @@ def check_for_empty_cluster(clusters, rdd):
     for index, size in enumerate(cluster_sizes):
         
         if size == 0:
-            partition_index = int(np.floor(index/n_partitions))
+            partition_index = int(np.floor(index/n_clusters))
             partition_sizes = cluster_sizes[n_clusters*(partition_index):n_clusters*(partition_index+1)]
             biggest_cluster = np.argmax(np.array(partition_sizes)) + n_clusters*(partition_index)
             random_element = random.choice(clusters[biggest_cluster].members)
